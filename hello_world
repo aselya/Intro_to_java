@@ -1,0 +1,11 @@
+// if you read this far I'm impressed.
+// This program may be simple but everyone starts somewhere right!
+
+public class HelloWorld2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("Hello World!");
+	}
+
+}
