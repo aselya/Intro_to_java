@@ -1,0 +1,216 @@
+// Things we need for the hangman game
+// 1. A way to get guesses from the user - we've done user input
+// 2. A list of words from which to select the word to be guessed - we've done arrays
+// 3. A way to know which letters of the word have been guessed - explained here
+// 4. A way to randomly select a word from the list - explained here
+// 5. Various loops to support the game play - we've done loops
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Hangman
+{
+	 
+	String[] words = {"TESTING"};// left from testing
+	String word; // to hold the chosen word
+	boolean finished = false;
+	
+	String entryWord =" ";
+	
+	
+	//variables all of the variables data is private
+	private boolean [] foundLetters;// array for storing found letters
+	private Scanner myScanner = new Scanner(System.in);
+	private StringBuffer sb = new StringBuffer();
+	private StringBuffer buffer = new StringBuffer();
+	private String secretWord;
+	private int wordLength;
+	private int secretWordLength;
+	private int position;
+	private int guessCount;
+	private int badGuessCount;
+	private int maxguessCount = 6;
+	private int lettersRemaining;
+	private boolean makeGuess;
+	private String displayableWord;
+	private char guess;
+    private StringBuffer prevGuessedLetters;
+    
+    public Hangman()
+    {
+    getHiddenString();// calls method gethiddentstring
+    	
+    	
+    playAGame();// starts the main game loop
+    }//close hangman
+    
+    public void getHiddenString(){
+    	Scanner scan = new Scanner(System.in);// creates new scanner named scan
+        System.out.print("Welcome to hang man please enter the word you would like to have guessed: ");
+        secretWord = scan.nextLine();//takes input from user and uses it as secret word
+        secretWord = secretWord.toUpperCase();//converts to uppercase to avoid errors
+        //System.out.print(secretWord); left in from debugging
+        
+    }//close gethiddenstring
+    
+    public void playAGame()
+    { 
+        
+        
+        // create a boolean array the size of the word
+        foundLetters = new boolean[secretWord.length()];
+        
+        while (!finished)//exit parameter is boolean finished
+        {
+            displayMan(); // print the gallows and person
+            showWord();// calls method show word
+            getGuess();// calls method get guess
+            checkGuess();// evaluates guess
+             if (badGuessCount==6) // ends game if too many bad guesses
+             {
+                 displayMan();
+                 System.out.println("Sorry, but you lost.");// lets user know they lost
+                 System.out.println("The word was: "+word);// lets user know what the word was
+                 finished=true;// created exit condition
+             }//close if statement
+        }//close while loop
+    }//end playAgame
+
+    public void displayMan()
+    {
+        
+        int manLimbs = badGuessCount; //converts bad guess count to statment for switch 
+        switch(manLimbs){  
+        case 0: man_0();break;  //evaluates number of bad guesses and prints appropriate amount of limbs
+        case 1: man_1();break;  
+        case 2: man_2();break;
+        case 3: man_3();break;  
+        case 4: man_4();break;  
+        case 5: man_5();break;
+        case 6: man_6();break;
+        default:man_0();// sets default to no limbs
+           
+        
+        }//end switch
+    }//end displayMan
+ 
+    public boolean showWord()
+    {
+         boolean goodGuess = false; // sets goodGuess to false
+         char ch = entryWord.charAt(0); //makes sure it only pulls one character
+         for (int lc=0; lc < word.length(); lc++)// for loop that compares user input to secret word
+             if (foundLetters[lc]==true)
+             {
+               System.out.print(word.charAt(lc)+" ");// replaces word with charaters
+             }//end if
+             else if (word.charAt(lc)==ch)
+                  {
+                      System.out.print(word.charAt(lc)+" ");
+                      foundLetters[lc] = true; 
+                      goodGuess = true; // registers user guess as a good guess
+                   }//end else if
+                   else
+                       System.out.print("_ ");// if above statments are still unguessed this prints out blanks
+         return goodGuess;
+    }//end showWord
+          
+    public void getGuess()//gets the user guess
+    {
+    	while (lettersRemaining > 0 && badGuessCount < 6) {// exit conditions for loop
+			guessCount ++;// adds one to guess count
+	    	Scanner kbd = new Scanner(System.in);// new scanner
+	        System.out.println("Guess a letter:");
+	        guess = kbd.nextLine().charAt(0);// pulls only the first char from input
+	        guess = Character.toUpperCase(guess);}// uppercasses it to avoid bugs
+    }// getGuess end
+      
+    public void checkGuess()
+    {
+    	makeGuess = (secretWord.indexOf(guess)) != -1;// index value of a false defaults to -1
+
+        if (makeGuess == false) {
+            badGuessCount++; // badguess increases by 1 with bad guess
+            System.out.print("You chose poorly.");// indiana jones joke
+        }//end else
+         else {
+            System.out.println("You chose wisely!");// another indiana jones joke
+
+            for (position = 0; position < wordLength; position++) {// for loop for prinint out secret letters guessed
+                if (secretWord.charAt(position) == guess) {// evaluates is secret word charater is == to guess
+                    System.out.print(guess);
+                    lettersRemaining--;// reduces letter remaining
+                } else {
+                    System.out.print("_ "); // prints _ if word is incorrect
+                }// end nested else
+            }// end for
+        }// end else
+        System.out.println();//formating
+        prevGuessedLetters = buffer.append(guess);// adds letter guessed to guesses
+        System.out.print("letters you've already guessed: ");
+        System.out.println(prevGuessedLetters); // prints previous guessed
+                   
+    }// end check guess
+      
+    public void man_6()//prints full man
+    {
+       System.out.println("_____");
+       System.out.println("|   |");
+       System.out.println("|   o");
+       System.out.println("|  /|\\"); 
+       System.out.println("|  / \\"); 
+    }
+    
+    public void man_0()//prints just gallows
+    {
+       System.out.println("_____");
+       System.out.println("|   |");
+       System.out.println("|   ");
+       System.out.println("|   "); 
+       System.out.println("|   "); 
+    }
+    
+    public void man_1()//prints just head
+    {
+       System.out.println("_____");
+       System.out.println("|   |");
+       System.out.println("|   o");
+       System.out.println("|    "); 
+       System.out.println("|    "); 
+    }
+    
+    public void man_2()// prints head and body
+    {
+       System.out.println("_____");
+       System.out.println("|   |");
+       System.out.println("|   o");
+       System.out.println("|   | "); 
+       System.out.println("|    "); 
+    }
+    
+    public void man_3()// prints head limb and body
+    {
+       System.out.println("_____");
+       System.out.println("|   |");
+       System.out.println("|   o");
+       System.out.println("|  /| "); 
+       System.out.println("|    "); 
+    }
+    
+    public void man_4()// print head limb body and arm
+    {
+       System.out.println("_____");
+       System.out.println("|   |");
+       System.out.println("|   o");
+       System.out.println("|  /|\\ "); 
+       System.out.println("|    "); 
+    }
+    
+    public void man_5()// print head limb body arms and 1 leg
+    {
+       System.out.println("_____");
+       System.out.println("|   |");
+       System.out.println("|   o");
+       System.out.println("|  /|\\ "); 
+       System.out.println("|    \\"); 
+    }
+}
