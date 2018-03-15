@@ -1,0 +1,89 @@
+package hw2_java;
+import java.util.Scanner;
+
+public class javaHw2_order {
+
+	private static Scanner efg;
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		
+int usr_inputA = 2;
+int usr_inputB = 1;
+int usr_inputC = 0;
+		
+Scanner kbd = new Scanner(System.in);
+System.out.print("Enter any number: ");
+usr_inputA = kbd.nextInt();
+
+Scanner abc = new Scanner(System.in);
+System.out.print("Enter another number: ");
+usr_inputB = abc.nextInt();
+		
+
+Scanner efg = new Scanner(System.in);
+System.out.print("Enter your final number: ");
+usr_inputC = efg.nextInt();
+
+
+int a = usr_inputA;
+int b = usr_inputB;
+int c = usr_inputC;
+
+
+// find the lowest and go from there
+
+
+
+
+System.out.println("you entered "+a +" and "+b+ " as well as "+ c);
+//System.out.print("the previous is a ");
+//System.out.print(b);
+//System.out.print("the previous is b ");
+//System.out.print(c);
+//System.out.print("the previous is c ");
+
+int max= 0, min= 0, mid = 0;
+min = usr_inputC;
+if( a < b ){
+	if (a< c){
+		min = a;
+		if (b < c){
+			mid = b;
+			max = c;
+		}else{
+			mid = c;
+			max = b;}
+		
+	}else{
+		min = c;
+		max = a;
+		mid = b;
+		}
+}else{
+	if(b<a){
+		if (b< c){
+			min = b;
+		}if (a<c){
+			mid = a;
+			max = c;
+		}else{
+			mid = c;
+			max = a;
+		}
+		}else{
+			min = c;
+			max = a;
+			mid = b;}
+		}
+
+
+
+
+
+System.out.println("The smallest value is: " + min);
+System.out.println("The middle value is: " + mid);
+System.out.println("The largest value is: " + max);
+
+	}}
