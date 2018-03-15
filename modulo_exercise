@@ -1,0 +1,42 @@
+package hw2_java;
+import java.util.Scanner;
+public class four_digit {
+
+	public static final int THOUSAND = 1000;
+	public static final int HUNDRED = 100;
+	public static final int TEN = 10;
+	public static final int ONES = 1;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		int usr_input;
+		
+		Scanner kbd = new Scanner(System.in);
+		System.out.print("Enter any 4 digit number: ");
+		usr_input = kbd.nextInt();
+
+		System.out.println("You entered " + usr_input);
+		
+		if (usr_input >= 10000) {
+			System.out.println("Come on you know better than to enter that many digits.");
+		} else {
+			int runningTotal = usr_input;
+			
+			int thousand = runningTotal / THOUSAND;
+			runningTotal = runningTotal % THOUSAND;
+			
+			int hundred = runningTotal / HUNDRED;
+			runningTotal = runningTotal % HUNDRED;
+			
+			int tens = runningTotal / TEN;
+			runningTotal = runningTotal % TEN;
+			
+			int ones = runningTotal;
+			
+			System.out.println(thousand);
+			System.out.println(hundred);
+			System.out.println(tens);
+			System.out.println(ones);
+			
+		}}}
