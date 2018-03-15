@@ -1,0 +1,146 @@
+
+#1
+log results
+
+	run 1
+The previous count value is 0
+The new count value is 0
+
+	run 2
+The previous count value is 5
+The new count value is 0
+
+	run 3
+The previous count value is 5
+The new count value is 6
+
+
+#1 Source code
+
+public class Counter {
+	
+	public static int countChoice = -1;
+	// -1 for lowering by one, 0 for reset and 1 for adding 1
+	public static int newCount = 0;
+	// starts new count at 0, this number is altered by the method below
+	public static int startCount = 0;
+	// starting value can be changed manually
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		//below command left in for debugging
+		//System.out.println("testing the program!!");
+		counting();
+		// above command calls the counting method
+
+	}
+	
+	public static void counting() {
+		// identifies reset first, then addition and subtraction
+		if (countChoice == 0){
+			newCount = 0;
+		}else if (countChoice == 1){
+			newCount = startCount + 1;
+		}else if (countChoice == -1){
+			newCount = startCount -1;
+		}
+		//this separate if statement ensures count is not below 0
+		if (newCount < 0){
+			newCount = 0;
+		}
+		// prints the new value of newCount and tells the value of the start
+		System.out.println("The previous count value is " + startCount);
+		System.out.println("The new count value is " + newCount);
+}
+}
+
+
+
+# 2
+log results
+
+
+	run 1
+The number that started in the room is: 50
+The total number of people in the room is: 49
+The total number of people in all the rooms was: 50
+Now the total number of people in all the rooms is: 49
+
+	run 2
+The number that started in the room is: 0
+The total number of people in the room is: 1
+The total number of people in all the rooms was: 0
+Now the total number of people in all the rooms is: 1
+
+
+	run 3
+The number that started in the room is: 0
+The total number of people in the room is: 0
+The total number of people in all the rooms was: 0
+Now the total number of people in all the rooms is: 0
+
+
+Source code for question 2
+
+public class RoomOccupancy {
+
+	static int numberInRoom; // creates the attribute numberInRoom in class RoomOccupancy
+	static int totalNumber;   // creates the attribute totalNumber in class RoomOccupancy
+	
+	public static int countChoice = -1; // determines if there will be a person added or removed from room
+	public static int startNumber = 0; // number of people in the room at beginning
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub		
+		addOnetoRoom();
+		removeOneFromRoom();
+		getNumber();
+		getTotal();
+	}
+
+	// this method adds 1 to the room
+	public static void addOnetoRoom(){
+		if (countChoice == 1){
+			numberInRoom = startNumber + 1;
+			// increases total number at the same time numberInroom
+			totalNumber = startNumber + 1;
+		}
+	}
+	// this method subtracts to the room
+	public static void removeOneFromRoom(){
+			if (countChoice == -1){
+				numberInRoom = startNumber -1;
+				// decreases total number at the same time numberInroom
+				totalNumber = startNumber - 1;
+			}
+			// makes sure that the number in the room and total will not ever be less than 0
+			if (numberInRoom < 0){
+				numberInRoom = 0;
+				totalNumber = 0;
+			}
+		}
+
+	
+	
+	//method returns the number of people in the room
+	public static int getNumber() {
+		System.out.println("The total number of people in the room is: " + numberInRoom);
+		return numberInRoom;
+	}
+
+
+	
+
+	// this method returns total number of people
+	public static int getTotal() {
+		System.out.println("The total number of people in all the rooms is: " + totalNumber);
+		return totalNumber;
+	}
+
+
+
+}
+		
