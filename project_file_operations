@@ -1,0 +1,327 @@
+/* Aaron Selya
+ * 5/2017
+ * Intro to Programming with JAVA
+ * 
+ * Following program will take any file you give it find the following information: 
+ * Number of times translyvania, harker, renfield, vampire, expostulate and fangoriously appear
+ * The length of the longest word
+ * The total number of words
+ * And can take user input to search for a user generated word and provide the number of times
+ * the word occurs as well as its location
+ * 
+ * known bugs: none
+ * 
+ * for any additional information or bug reporting please email me at aselya@bu.edu
+ * 
+*/
+
+
+
+
+//imports referenced by code below
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+
+public class FileOperations {
+
+	/**
+	   * File Operations Constructor.
+	   */
+	
+	//the main method
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		openFile(); // calls openfile
+		readFile(); //  calls read file
+		lowerCase();// calls lowercase
+		removePuncuation(); // calls remove punctuation
+		wordOccurance(); // calls wordOccurance
+		numWords(); // calls numWords
+		longWord(); // calls longWord
+		// surrounded by a try catch because it is using buffered reader in the method
+		try {
+			lineNumbers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WriteItall(); // calls write all
+	}// end main
+	
+	
+	//initialize variables
+	private static String dracula = ""; //where the text will be stored
+	private static Scanner x; //scanner used to read file
+	private static String output = "";//string where information to be written to the output file is stored 
+	
+	
+	//this method opens the file
+	//prints a statement confirming if file has been opened
+	//handles exceptions
+	public static void openFile(){
+		try{
+	x = new Scanner(new File("/Users/selyaaaron/Desktop/dracula.txt"));
+		//confirms that the file was found
+		System.out.println("file found");
+		output = output + "\nFile found";
+		}catch(Exception e){
+			// if the file is not found provides feedback
+			System.out.println("file could not be found");
+			output = output + "\nFile not found";
+		}	
+	}//end openfile
+	
+	
+	
+	//reads file in using scanner
+	//adds content of the file to string variable dracula
+	public static void readFile(){
+		//sets scanner to loop until there is no more input
+		while(x.hasNext()){
+			//takes value of the scanner and sets it equal to string variable
+			String a = x.next();
+			// appends string variable a to the static variable dracula
+			dracula = dracula +" " + a;
+		}
+		//confirms that the file was read to user and output file
+		System.out.println("file read");
+		output = output + "\nFile read";
+		//System.out.print(dracula);
+	}//end readFile
+	
+	
+	//method takes the value of the dracula static string variable 
+	// changes all values to lowercase for processing
+	public static void lowerCase(){
+		//uses built in feature of java to lowercase the sting
+		dracula = dracula.toLowerCase();
+		//System.out.println();
+		//System.out.print(dracula);
+	}//lowercase end
+	
+	
+	//method removes punctutation from dracula string
+	//uses regex to do so
+	public static void removePuncuation(){
+		System.out.println();
+		System.out.println("removing punctuation");
+		//confirms activation of the method
+		output = output + "\nremoving punctuation";
+		//replaces any non letter or numerical value in file to ""
+		//[a-zA-Z\\s] is the pattern
+		// adding ^ to the front of the pattern identifies items not in the pattern
+		//replaceAll function replaces identified pattern with replacement pattern seperated by a comma
+		String draculaNoPunct = dracula.replaceAll("[^a-zA-Z\\s]", "").replaceAll("\\s+", " ");
+    //System.out.println(draculaNoPunct);
+    dracula =draculaNoPunct;
+    }
+	
+	
+	//shows the number of times a word occurs in a given file
+	//uses built in split method 
+	//this allows the word being searched for to be the delimiter
+	// -1 off total because method will always have at least one 
+	public static void wordOccurance(){
+		//splits the file by the word transylvania and subtracts 1 to set occurrences
+		int count = dracula.split("transylvania").length - 1;
+		//provides user and output file with infromation on the number of occurrences
+		System.out.println("Number of Occurances of the word translyvania is:");
+		output = output + "\nNumber of Occurances of the word translyvania is:";
+		//outputs the number of occurrences to 
+		System.out.println(count);
+		output = output + count;
+		
+		
+		//
+		//below code is the same at the one above
+		//Refer to comments for transylvania 
+		// Repeats same structure for remainder of the method
+		//
+		int count2 = dracula.split("harker").length - 1;
+		System.out.println("Number of Occurances of the word harker is:");
+		output = output + "\nNumber of Occurances of the word harker is:";
+		System.out.println(count2);
+		output = output +  count2;
+		
+		int count3 = dracula.split("renfield").length - 1;
+		System.out.println("Number of Occurances of the word renfield is:");
+		output = output + "\nNumber of Occurances of the word renfield is:";
+		System.out.println(count3);
+		output = output + count3;
+		
+		int count4 = dracula.split("vampire").length - 1;
+		System.out.println("Number of Occurances of the word vampire is:");
+		output = output + "\nNumber of Occurances of the word vampire is:";
+		System.out.println(count4);
+		output = output +  count4;
+		
+		int count5 = dracula.split("expostulate").length - 1;
+		System.out.println("Number of Occurances of the word expostulate is:");
+		output = output + "\nNumber of Occurances of the word expostulate is:";
+		System.out.println(count5);
+		output = output + count5;
+		
+		int count6 = dracula.split("fangoriously").length - 1;
+		System.out.println("Number of Occurances of the word fangoriously is:");
+		output = output + "\nNumber of Occurances of the word fangoriously is:";
+		System.out.println(count6);
+		output = output +  count6;
+		
+		
+	}
+	
+	
+	//this method takes user input
+	// uses buffered reader to find matches to user selected phrase
+	// prints the phrase selected. lines it appears on and if the phrase appears at all
+	//since it creates a new bufferedReader it throws an IOExeception
+	public static void lineNumbers() throws IOException
+	{
+		//sets counter to 0
+		//counter will be used to keep track of the line being read in
+		int counter = 1;
+		//tracks number of times word has been found
+		int numberOfTimes = 0;
+		//bool seachOver set to false
+		boolean searchOver = false;
+		//bool seachOver being true is the exit condition for the loop
+		while (searchOver != true){
+			// creates new scanner
+			Scanner usr = new Scanner(System.in);
+			//prompts the user to select a word to search or quit
+			System.out.println("If you would like to search for a specific word type it now.\nIf you would like to quit type the letter 'Q'");
+			//scanner gets information from usr
+			String search = usr.nextLine();
+			//converts input to lowercase to match the lowercase of the file
+			search.toLowerCase();
+			// sets value for the string number which will be used to report on the number of times the word is found
+			String numbers = "The word appears in these lines: ";
+		//interprets if the usr wanted to quit  
+		if (search == "q"){
+			//provides the usr feedback if they chose to quit
+			System.out.println("I hope you enjoyed the program");
+			output = output + "\nI hope you enjoyed the program ";
+			//satisfies quit condition
+			searchOver = true;
+		//if the user didn't want to quit this code block runs
+		//uses bufferedReader to read the file line by line
+		//if word being searched for is identified it adds the line number to the numbers variable
+		}else{
+			//System.out.println("you did not quit!");
+			//lets user know what the word they were searching for was
+			System.out.println("your word was " + search);
+			output = output + "\nThe word you selected to search for is: ";
+			output = output + "\n" + search;
+			
+			//because it is using a file it is surrounded by a try catch
+			//File reader reads the whole file
+			//Buffered reader reads the output from FileReader one line at a time
+			try (BufferedReader br = new BufferedReader(new FileReader("/Users/selyaaaron/Desktop/dracula.txt"))) {
+			   //sets variable line to store the value of each line read in
+			    String line;
+				//sets exit condition to no more lines
+			    while ((line = br.readLine()) != null) {
+			    	//converts the line to lowercase
+					String lowerLine = line.toLowerCase();
+					//System.out.print(lowerLine);
+			    	//uses the same splitting technique used in the wordOccurances method
+					//to determine if the line has the value being searched for stores value as variable count
+					int count = lowerLine.split(search).length - 1;
+			    	//if the count is != 0 that means at least one occurrence of the word is present in the line
+					if(count != 0){
+						//if statement in here for formatting reasons
+			    		if (numberOfTimes < 1){
+			    			//adds the value of the line to the numbers string
+			    			numbers = numbers + counter;
+			    			//increases counter
+			    			counter ++;
+			    			//increases number of times to allow future occurrences to use else part of the statement
+				    		numberOfTimes ++;	
+			    		//same as above if statement but adds a "," for formatting
+			    		}else{
+			    		//formatting done with this statment
+			    		numbers = numbers + "," + counter;
+			    		counter ++;
+			    		numberOfTimes ++;}
+			    		//System.out.println("diary");
+			    	}else{
+			    		counter ++;
+			    		//System.out.println("test");
+			    	}
+			    	
+			       
+			    }
+			}
+			//sets exit condition for loop
+			searchOver = true;
+			System.out.println();
+			System.out.println(numbers);
+			//evaluates if term was found
+			//provides feedback if it was found or not
+			if (numberOfTimes > 0){
+			output = output + "\nThe word appeared on the following lines: ";
+			output = output + "\n" + numbers;
+			}else{
+				output = output + "\nThe word did not appear in the file.";
+			}
+			
+			
+		}}
+		}
+	// takes inputed string and splits it using blank spaces as delimiters
+	//stores split in array
+	//uses length of the array to evaluate number of words
+	public static void numWords(){
+	// uses regex to split by blank spaces
+	String[] words=dracula.split("\\s+");
+	//prints the number of words using the length of array
+	System.out.print("The number of words in the file is: ");
+	output = output + "\nNumber of words in the file is: ";
+	System.out.println(words.length);
+	output = output + "\n" + words.length;}
+	
+	
+	// takes inputed string and splits it using blank spaces as delimiters
+	//stores split in array
+	//compares the length of each value in the array to the previous longest value
+	//prints longest value
+	public static void longWord(){
+		//splits the string into array
+		String draculaLong[] = dracula.split(" ");
+		//variable for storing longest word
+		String longWord = "";
+		//for loop evaluates the length of the value stored in each cell of the array
+		for (int i = 0; i < draculaLong.length; i++){
+			//if the value stored is greater than length of current longest word stored 
+			//the value indicated by i replaces the longest word
+			if (draculaLong[i].length() > longWord.length()){
+				longWord = draculaLong[i];
+			}
+		}
+		//prints the longest word
+		System.out.println("The longest word is" + longWord);
+		output = output + "\nThe longest word is: "+ longWord;
+	}
+	
+	//method creates a new PrintWriter to create and write a file for results
+	//takes the string named output and writes it to the file
+	//
+	public static void WriteItall(){
+	try{
+		//printWriter creates the file and sets format
+	    PrintWriter writer = new PrintWriter("project3.out", "UTF-8");
+	    // writes information stored in variable String output to the file
+	    writer.append(output);
+	    //closes file to prevent any additional changes
+	    writer.close();
+	    //lets user know if the file can not be written
+	} catch (IOException e) {
+	   System.out.print("unable to write to new file");
+	}}
+	
+}// end fileOperations Class
